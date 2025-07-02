@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1>Gestión de Productos</h1>
+  <button class="add-btn" (click)="openModal()"><i class="bi bi-plus-circle-fill"></i> Añadir Producto</button>
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Categoría</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
+        <td><img [src]="product.imageUrl" [alt]="product.name" class="product-thumb"></td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency:'USD' }}</td>
+        <td>{{ product.category }}</td>
+        <td>
+          <button class="action-btn edit-btn" (click)="openModal(product)">
+            <i class="bi bi-pencil-fill"></i>
+          </button>
+          <button class="action-btn delete-btn" (click)="onDelete(product)">
+            <i class="bi bi-trash-fill"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-modal *ngIf="isModalOpen" (close)="closeModal()">
+  <app-add-product-form
+    [productToEdit]="productToEdit"
+    (productAdded)="closeModal()">
+  </app-add-product-form>
+</app-modal>

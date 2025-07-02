@@ -1,0 +1,18 @@
+<section class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-headline">BaratongoVzla</h1>
+    <p class="hero-slogan">Buenos precios y mejor calidad.</p>
+  </div>
+</section>
+
+<section class="featured-products">
+  <h2 class="section-title">Productos Destacados</h2>
+  <div class="products-grid">
+    <app-product-card *ngFor="let product of featuredProducts"
+      [imageUrl]="product.imageUrl"
+      [productName]="product.name"
+      [price]="product.price"
+      [productId]="product.id">
+    </app-product-card>
+  </div>
+</section>

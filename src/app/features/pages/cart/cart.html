@@ -1,0 +1,38 @@
+<div class="cart-page-container">
+  <h1 class="page-title">Mi Carrito</h1>
+
+  <div *ngIf="cartItems.length > 0; else emptyCart" class="cart-content">
+    <div class="cart-items-list">
+      <div *ngFor="let item of cartItems" class="cart-item">
+        <img [src]="item.imageUrl" [alt]="item.name" class="item-image">
+        <div class="item-details">
+          <span class="item-name">{{ item.name }}</span>
+          <span class="item-price">{{ item.price | currency:'USD' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-summary">
+      <h2 class="summary-title">Resumen</h2>
+      <div class="summary-line">
+        <span>Subtotal</span>
+        <span>{{ cartTotal | currency:'USD' }}</span>
+      </div>
+      <div class="summary-line total">
+        <span>Total</span>
+        <span>{{ cartTotal | currency:'USD' }}</span>
+      </div>
+        <a routerLink="/checkout" class="checkout-button">Proceder al Pago</a>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-cart-container">
+      <i class="bi bi-cart-x"></i>
+      <h2>Tu carrito está vacío</h2>
+      <p>Parece que no has añadido nada a tu carrito. ¡Explora nuestros productos!</p>
+      <a routerLink="/inicio" class="explore-button">Ver Productos</a>
+    </div>
+  </ng-template>
+
+</div>

@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Layout } from './core/layout/layout'; // CORREGIDO
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule, Layout], // CORREGIDO
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  protected title = 'baratongo-vzla';
+export class AppComponent {
+  title = 'baratongo-vzla';
 }

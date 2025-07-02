@@ -1,0 +1,40 @@
+<div class="catalog-container">
+  <h1 class="page-title">Nuestro Catálogo</h1>
+
+  <div class="search-bar-container">
+  <i class="bi bi-search"></i>
+  <input
+    type="search"
+    class="search-input"
+    placeholder="Buscar por nombre..."
+    #searchInput
+    (input)="onSearch(searchInput.value)">
+</div>
+
+  <div class="filters-container">
+    <button
+      (click)="filterByCategory('Todos')"
+      [class.active]="activeCategory === 'Todos'">
+      Todos
+    </button>
+    <button
+      *ngFor="let category of categories"
+      (click)="filterByCategory(category)"
+      [class.active]="activeCategory === category">
+      {{ category }}
+    </button>
+  </div>
+
+  <div class="products-grid">
+    <app-product-card *ngFor="let product of filteredProducts"
+      [imageUrl]="product.imageUrl"
+      [productName]="product.name"
+      [price]="product.price"
+      [productId]="product.id">
+    </app-product-card>
+  </div>
+
+  <div *ngIf="filteredProducts.length === 0" class="no-results">
+    <p>No se encontraron productos en esta categoría.</p>
+  </div>
+</div>

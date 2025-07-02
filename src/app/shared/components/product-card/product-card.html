@@ -1,0 +1,11 @@
+<a [routerLink]="['/producto', productId]" class="card-link">
+  <article class="product-card">
+    <div class="product-image-container">
+      <img [src]="imageUrl" [alt]="productName" class="product-image">
+    </div>
+    <div class="product-info">
+      <h3 class="product-name">{{ productName }}</h3>
+      <p class="product-price">{{ price | currency:'USD':'symbol':'1.2-2' }}</p>
+    </div>
+  </article>
+</a>

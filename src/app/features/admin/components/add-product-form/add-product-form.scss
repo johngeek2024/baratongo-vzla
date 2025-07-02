@@ -1,0 +1,35 @@
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  label { display: block; font-weight: 600; margin-bottom: 6px; }
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d2d2d7;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+}
+
+.submit-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #0071e3;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+
+    &:disabled {
+        background-color: #b0b0b0;
+        cursor: not-allowed;
+    }
+}

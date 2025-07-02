@@ -1,0 +1,86 @@
+:host {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.tab-bar-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 65px; // Un poco más de altura para los iconos
+  padding-bottom: 5px; // Espacio extra en la parte inferior
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 4px; // Espacio entre el icono y el texto
+  color: #8e8e93; // Un gris estándar de iOS para iconos inactivos
+  text-decoration: none;
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out; // Transición suave para el color
+
+  // Estilo para el icono
+  i {
+    font-size: 22px; // Tamaño del icono
+  }
+
+  // Cuando el link está activo, el color cambia
+  &.active {
+    color: #000000; // Negro sólido para el item activo
+  }
+.tab-item {
+  position: relative; // AÑADIR ESTA LÍNEA
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 4px;
+  color: #8e8e93;
+  text-decoration: none;
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+
+  i {
+    font-size: 22px;
+  }
+
+  &.active {
+    color: #000000;
+  }
+}
+
+.cart-badge {
+  position: relative;
+  top: 0px; // Ajustado
+  right: 25px; // Ajustado
+  background-color: #ff3b30;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+}

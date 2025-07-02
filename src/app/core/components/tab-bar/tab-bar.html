@@ -1,0 +1,35 @@
+<nav class="tab-bar-container">
+  <a
+    class="tab-item"
+    routerLink="/inicio"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact: true}">
+    <i class="bi bi-house-door-fill"></i>
+    <span>Inicio</span>
+  </a>
+
+  <a
+    class="tab-item"
+    routerLink="/busqueda"
+    routerLinkActive="active">
+    <i class="bi bi-search"></i>
+    <span>Búsqueda</span>
+  </a>
+
+  <a
+    class="tab-item"
+    routerLink="/carrito"
+    routerLinkActive="active">
+    <i class="bi bi-cart-fill"></i>
+    <span>Carrito</span>
+    <span *ngIf="cartItemCount > 0" class="cart-badge">{{ cartItemCount }}</span>
+  </a>
+
+  <a
+    class="tab-item"
+    [routerLink]="isLoggedIn ? '/perfil' : '/login'"
+    routerLinkActive="active">
+    <i class="bi bi-person-fill"></i>
+    <span>Perfil</span>
+  </a>
+</nav>

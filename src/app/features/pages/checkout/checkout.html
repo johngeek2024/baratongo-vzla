@@ -1,0 +1,94 @@
+<div class="checkout-page-container">
+  <h1 class="page-title">Finalizar Compra</h1>
+  <div class="checkout-content">
+    <div class="info-column">
+      <div class="form-section">
+        <h2>1. Información de Contacto</h2>
+        </div>
+
+      <div class="form-section">
+        <h2>2. Método de Entrega</h2>
+        <div class="primary-option">
+          <input type="radio" id="pickup" name="deliveryMethod" value="pickup" (change)="onDeliveryMethodChange('pickup')" [checked]="deliveryMethod === 'pickup'">
+          <label for="pickup">Retirar en Puntos Gratuitos</label>
+
+          <div class="conditional-content" *ngIf="deliveryMethod === 'pickup'">
+            <div class="delivery-option">... Colegio Luz ...</div>
+            <div class="delivery-option" *ngIf="cartTotal >= deliveryMinAmount">... Metro Lara ...</div>
+            <div class="delivery-option" *ngIf="cartTotal >= deliveryMinAmount">... Metro Cedeño ...</div>
+            <div class="delivery-option" *ngIf="cartTotal >= deliveryMinAmount">... Torre Banaven ...</div>
+          </div>
+        </div>
+
+        <div class="primary-option">
+          <input type="radio" id="local_delivery" name="deliveryMethod" value="local_delivery" (change)="onDeliveryMethodChange('local_delivery')" [checked]="deliveryMethod === 'local_delivery'">
+          <label for="local_delivery">Delivery Local en Valencia (Costo Adicional)</label>
+
+          <div class="conditional-content" *ngIf="deliveryMethod === 'local_delivery'">
+            <p><strong>Dirección de Entrega:</strong></p>
+            <div class="form-group"> ... Campo para dirección ... </div>
+            <p><strong>Elige una opción:</strong></p>
+            <div class="delivery-option">
+              <input type="radio" id="moto" name="localDeliveryType" value="moto" (change)="onLocalDeliveryTypeChange('moto')" [checked]="localDeliveryType === 'moto'">
+              <label for="moto">Moto (Ridery/Yummy) - Tarifa: {{ motoFee | currency:'USD' }}</label>
+            </div>
+            <div class="delivery-option">
+              <input type="radio" id="carro" name="localDeliveryType" value="carro" (change)="onLocalDeliveryTypeChange('carro')" [checked]="localDeliveryType === 'carro'">
+              <label for="carro">Carro (Entrega Personal) - Tarifa: {{ carroFee | currency:'USD' }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="primary-option">
+          <input type="radio" id="national_shipping" name="deliveryMethod" value="national_shipping" (change)="onDeliveryMethodChange('national_shipping')" [checked]="deliveryMethod === 'national_shipping'">
+          <label for="national_shipping">Envío Nacional (Cobro a Destino)</label>
+
+          <div class="conditional-content" *ngIf="deliveryMethod === 'national_shipping'">
+            <p><strong>Dirección de Envío:</strong></p>
+            <div class="form-group"> ... Campos de dirección de envío ... </div>
+            <p><strong>Elige una opción:</strong></p>
+            <div class="delivery-option">
+              <input type="radio" id="mrw" name="nationalCourier" value="mrw" checked>
+              <label for="mrw">MRW</label>
+            </div>
+            <div class="delivery-option">
+              <input type="radio" id="zoom" name="nationalCourier" value="zoom">
+              <label for="zoom">Zoom</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>3. Método de Pago</h2>
+        <div class="payment-option">... Pago Móvil ...</div>
+        <div class="payment-option">... Binance Pay ...</div>
+
+        <div class="payment-option" *ngIf="deliveryMethod === 'pickup' || (deliveryMethod === 'local_delivery' && localDeliveryType === 'carro')">
+          <input type="radio" id="cash" name="paymentMethod" value="cash">
+          <label for="cash">
+            <span class="option-title">USD en Efectivo</span>
+            <span class="option-detail">Pagar al momento de la entrega.</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-column">
+      <h2>Resumen del Pedido</h2>
+      <div class="summary-line">
+        <span>Subtotal</span>
+        <span>{{ cartTotal | currency:'USD' }}</span>
+      </div>
+      <div class="summary-line" *ngIf="deliveryFee > 0">
+        <span>Costo de envío</span>
+        <span>{{ deliveryFee | currency:'USD' }}</span>
+      </div>
+      <div class="summary-line total">
+        <span>Total</span>
+        <span>{{ grandTotal | currency:'USD' }}</span>
+      </div>
+      <button class="place-order-button">Confirmar Pedido</button>
+    </div>
+  </div>
+</div>

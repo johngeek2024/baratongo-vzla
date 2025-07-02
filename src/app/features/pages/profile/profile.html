@@ -1,0 +1,11 @@
+<div class="profile-container" *ngIf="user">
+  <h1 class="welcome-title">Bienvenido, {{ user.displayName }}</h1>
+  <p class="user-email">{{ user.email }}</p>
+
+  <div class="profile-actions">
+    <button class="logout-button" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i>
+      Cerrar Sesión
+    </button>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div *ngIf="product" class="product-detail-container">
+  <div class="product-image-section">
+    <img [src]="product.imageUrl" [alt]="product.name">
+  </div>
+  <div class="product-info-section">
+    <span class="product-category">{{ product.category }}</span>
+    <h1 class="product-title">{{ product.name }}</h1>
+    <p class="product-description">{{ product.description }}</p>
+    <div class="product-price-container">
+      <span class="product-price">{{ product.price | currency:'USD' }}</span>
+    </div>
+    <button class="add-to-cart-btn" (click)="onAddToCart()">Añadir al Carrito</button>
+  </div>
+</div>
+
+<div *ngIf="!product" class="not-found-container">
+  <h2>Producto no encontrado</h2>
+  <p>Lo sentimos, no pudimos encontrar el producto que estás buscando.</p>
+</div>
