@@ -4,15 +4,26 @@ import { ProductCard } from '../../../shared/components/product-card/product-car
 import { ProductService } from '../../../core/services/product';
 import { Product } from '../../../core/models/product.model';
 import { Title, Meta } from '@angular/platform-browser';
-// Se eliminan las importaciones de @angular/animations
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, ProductCard],
   templateUrl: './home.html',
-  styleUrls: ['./home.scss']
-  // Se elimina la propiedad 'animations: [...]'
+  styleUrls: ['./home.scss'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'translateY(20px)' }),
+          stagger('100ms', [
+            animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ])
+  ]
 })
 export class Home implements OnInit {
   featuredProducts: Product[] = [];
@@ -25,10 +36,7 @@ export class Home implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('BaratongoVzla - Buenos precios y mejor calidad');
-    this.metaService.updateTag({
-      name: 'description',
-      content: 'Tu tienda de electrónica y accesorios gamer en Valencia. Encuentra los mejores precios en proyectores, smartwatch, audífonos y más.'
-    });
+    this.metaService.updateTag({ name: 'description', content: 'Tu tienda de electrónica y accesorios gamer en Valencia.' });
 
     this.productService.products$.subscribe(products => {
       this.featuredProducts = products;
