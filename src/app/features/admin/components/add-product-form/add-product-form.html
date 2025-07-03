@@ -28,7 +28,9 @@
     <img *ngIf="productToEdit?.imageUrl && !selectedFile" [src]="productToEdit!.imageUrl" alt="Imagen actual" class="image-preview">
   </div>
 
-  <button type="submit" [disabled]="productForm.invalid || isUploading" class="submit-button">
+  <button type="submit"
+          [disabled]="productForm.invalid || (!productToEdit && !selectedFile) || isUploading"
+          class="submit-button">
     {{ isUploading ? 'Guardando...' : 'Guardar Producto' }}
   </button>
 </form>

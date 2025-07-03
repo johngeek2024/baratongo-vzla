@@ -6,6 +6,7 @@ import { ProductService } from '../../../core/services/product';
 import { Product } from '../../../core/models/product.model';
 import { CartService } from '../../../core/services/cart';
 import { SeoService } from '../../../core/services/seo'; // 2. Importar SeoService
+import { NotificationService } from '../../../core/services/notification'; // o .../notification
 
 @Component({
   selector: 'app-product-detail',
@@ -23,7 +24,8 @@ export class ProductDetail implements OnInit, OnDestroy { // 3. Implementar OnDe
     private cartService: CartService,
     private titleService: Title,
     private metaService: Meta,
-    private seoService: SeoService // 4. Inyectar SeoService
+    private seoService: SeoService, // 4. Inyectar SeoService
+    private notificationService: NotificationService, // Inyectar
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +55,8 @@ export class ProductDetail implements OnInit, OnDestroy { // 3. Implementar OnDe
   onAddToCart(): void {
     if (this.product) {
       this.cartService.addToCart(this.product);
+      // Llamamos a nuestro nuevo servicio
+      this.notificationService.showSuccess(`'${this.product.name}' fue añadido al carrito`, '¡Éxito!');
     }
   }
 }
