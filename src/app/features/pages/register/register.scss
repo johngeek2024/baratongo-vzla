@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 65px); // Ocupa toda la altura menos la tab-bar
+  min-height: calc(100vh - 65px);
   padding: 20px;
 }
 
@@ -60,4 +60,11 @@
     font-weight: 600;
     text-decoration: none;
   }
+}
+
+.error-message {
+  color: #d9363e;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 6px;
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth';
 
 @Component({
@@ -26,8 +26,14 @@ export class Register {
     });
   }
 
+  get name(): AbstractControl | null { return this.registerForm.get('name'); }
+  get email(): AbstractControl | null { return this.registerForm.get('email'); }
+  get password(): AbstractControl | null { return this.registerForm.get('password'); }
+
   async onSubmit(): Promise<void> {
     if (this.registerForm.invalid) {
+      // Esta línea es la que fuerza la aparición de los mensajes.
+      this.registerForm.markAllAsTouched();
       return;
     }
 
