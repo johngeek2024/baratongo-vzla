@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth';
 
 @Component({
@@ -25,8 +25,14 @@ export class Login {
     });
   }
 
+  // Getters para acceder fácilmente a los controles desde el HTML
+  get email(): AbstractControl | null { return this.loginForm.get('email'); }
+  get password(): AbstractControl | null { return this.loginForm.get('password'); }
+
   async onSubmit(): Promise<void> {
     if (this.loginForm.invalid) {
+      // Marca todos los campos como 'tocados' para mostrar los errores si el usuario intenta enviar
+      this.loginForm.markAllAsTouched();
       return;
     }
 
@@ -35,10 +41,8 @@ export class Login {
     try {
       const user = await this.authService.login(email, password);
       if (user) {
-        // Navega al perfil en un login exitoso
         this.router.navigate(['/perfil']);
       } else {
-        // Firebase Auth maneja errores a través del catch, pero esto es un respaldo
         alert('Correo o contraseña incorrectos.');
       }
     } catch (error) {

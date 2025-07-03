@@ -61,3 +61,10 @@
     text-decoration: none;
   }
 }
+
+.error-message {
+  color: #d9363e; // Rojo para errores
+  font-size: 0.875rem; // Letra un poco más pequeña
+  font-weight: 500;
+  margin-top: 6px;
+}
