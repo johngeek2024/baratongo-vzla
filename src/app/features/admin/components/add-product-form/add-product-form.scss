@@ -6,7 +6,11 @@
 
 .form-group {
   margin-bottom: 16px;
-  label { display: block; font-weight: 600; margin-bottom: 6px; }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
   input, textarea {
     width: 100%;
     padding: 10px;
@@ -17,19 +21,29 @@
 }
 
 .submit-button {
-    width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
-    background-color: #0071e3;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 10px;
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #0071e3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
 
-    &:disabled {
-        background-color: #b0b0b0;
-        cursor: not-allowed;
-    }
+  &:disabled {
+    background-color: #b0b0b0;
+    cursor: not-allowed;
+  }
+}
+
+// ESTILOS AÑADIDOS PARA LA IMAGEN DE PREVISUALIZACIÓN
+.image-preview {
+  max-width: 150px; // Limita el ancho de la imagen
+  height: auto;       // Mantiene la proporción correcta
+  border-radius: 8px; // Bordes redondeados para que coincida con el diseño
+  margin-top: 12px;   // Un poco de espacio superior
+  display: block;     // Asegura que ocupe su propia línea
+  border: 1px solid #e0e0e0;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../../core/services/cart'; // O .../cart
-import { Product } from '../../../core/models/product.model';
+import { CartService } from '../../../core/services/cart';
+import { CartItem } from '../../../core/models/cart-item.model';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -12,20 +12,25 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./cart.scss']
 })
 export class Cart implements OnInit {
-  cartItems: Product[] = [];
+  cartItems: CartItem[] = [];
   cartTotal: number = 0;
 
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    // Suscripción a la lista de items
-    this.cartService.cartItems$.subscribe(items => {
-      this.cartItems = items;
-    });
+    this.cartService.cartItems$.subscribe(items => this.cartItems = items);
+    this.cartService.cartTotal$.subscribe(total => this.cartTotal = total);
+  }
 
-    // Suscripción al total del carrito
-    this.cartService.cartTotal$.subscribe(total => {
-      this.cartTotal = total;
-    });
+  removeItem(productId: string): void {
+    this.cartService.removeFromCart(productId);
+  }
+
+  increaseQuantity(item: CartItem): void {
+    this.cartService.updateQuantity(item.product.id, item.quantity + 1);
+  }
+
+  decreaseQuantity(item: CartItem): void {
+    this.cartService.updateQuantity(item.product.id, item.quantity - 1);
   }
 }
