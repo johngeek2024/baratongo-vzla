@@ -113,16 +113,24 @@
 }
 
 .checkout-button {
+  display: block;          // <-- Añadido: Hace que el enlace se comporte como un bloque
   width: 100%;
+  text-align: center;      // <-- Añadido: Centra el texto dentro del botón
   padding: 16px;
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
   background-color: #0071e3;
   border: none;
+  text-decoration: none;   // <-- Añadido: Quita el subrayado por defecto del enlace
   border-radius: 8px;
   cursor: pointer;
   margin-top: 10px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #0077ed;
+  }
 }
 
 .empty-cart-container {

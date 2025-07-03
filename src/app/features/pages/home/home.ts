@@ -5,11 +5,12 @@ import { ProductService } from '../../../core/services/product';
 import { Product } from '../../../core/models/product.model';
 import { Title, Meta } from '@angular/platform-browser';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner'; // Importar spinner
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ProductCard],
+  imports: [CommonModule, ProductCard, LoadingSpinner], // Añadir LoadingSpinner
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
   animations: [
@@ -27,6 +28,7 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
 })
 export class Home implements OnInit {
   featuredProducts: Product[] = [];
+  isLoading: boolean = true; // 1. Propiedad para el estado de carga
 
   constructor(
     private productService: ProductService,
@@ -40,6 +42,7 @@ export class Home implements OnInit {
 
     this.productService.products$.subscribe(products => {
       this.featuredProducts = products;
+      this.isLoading = false; // 2. Cuando llegan los datos, se desactiva
     });
   }
 }

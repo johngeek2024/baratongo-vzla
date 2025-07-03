@@ -1,14 +1,18 @@
 <div class="catalog-container">
   <h1 class="page-title">Nuestro Catálogo</h1>
 
-  <div class="search-bar-container">
-  <i class="bi bi-search"></i>
-  <input
-    type="search"
-    class="search-input"
-    placeholder="Buscar por nombre..."
-    #searchInput
-    (input)="onSearch(searchInput.value)">
+<div class="catalog-container">
+  <div *ngIf="!isLoading; else loadingBlock">
+    <div class="products-grid">
+      </div>
+    <div *ngIf="filteredProducts.length === 0" class="no-results">
+      <p>No se encontraron productos en esta categoría.</p>
+    </div>
+  </div>
+
+  <ng-template #loadingBlock>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
 </div>
 
   <div class="filters-container">

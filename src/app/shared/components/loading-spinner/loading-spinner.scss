@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.custom-spinner {
+  width: 60px; /* Ancho del isologo, puedes ajustarlo */
+  height: 60px; /* Alto del isologo, puedes ajustarlo */
+  animation: fadeSpin 1.5s linear infinite; /* Aplica nuestra animación */
+}
+
+/* Definición de la animación */
+@keyframes fadeSpin {
+  0% {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 0.5; /* A mitad de la vuelta, se hace semi-transparente */
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 1;
+  }
+}

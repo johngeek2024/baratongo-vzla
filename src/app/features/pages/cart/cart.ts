@@ -23,7 +23,7 @@ export class Cart implements OnInit {
   }
 
   removeItem(productId: string): void {
-    this.cartService.removeFromCart(productId);
+    this.cartService.removeFromCart(productId.toString());
   }
 
   increaseQuantity(item: CartItem): void {
