@@ -1,0 +1,6 @@
+# Le decimos a todos los robots (User-agent: *) que pueden visitar todas las páginas (Allow: /)
+User-agent: *
+Allow: /
+
+# Indicamos dónde se encuentra nuestro mapa del sitio
+Sitemap: https://www.baratongovzla.com/sitemap.xml

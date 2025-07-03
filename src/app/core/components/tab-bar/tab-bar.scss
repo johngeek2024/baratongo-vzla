@@ -19,7 +19,7 @@
 }
 
 .tab-item {
-  position: relative; // <-- LA LÍNEA QUE FALTABA
+  position: relative; // La regla más importante para este problema
   display: flex;
   flex-direction: column;
   align-items: center;
