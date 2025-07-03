@@ -38,3 +38,8 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
+
+.hero-logo {
+  max-width: 300px; // Ajusta este valor según el tamaño de tu logo
+  margin-bottom: 16px;
+}

@@ -2,33 +2,39 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 
-// ¡Nuevas importaciones de Firestore!
 import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc } from '@angular/fire/firestore';
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  // 1. Inyectamos Firestore para poder usarlo
   private firestore: Firestore = inject(Firestore);
-
-  // 2. Referencia a nuestra colección de productos en la base de datos
+  private storage: Storage = inject(Storage);
   private productsCollection = collection(this.firestore, 'products');
 
-  // 3. El observable ahora lee los datos directamente de la colección
   public products$: Observable<Product[]> = collectionData(this.productsCollection, { idField: 'id' }) as Observable<Product[]>;
 
   constructor() { }
 
-  // Los métodos ahora interactúan con Firestore
-  getCategories(): string[] {
-    // Esta lógica deberá ser más avanzada a futuro, por ahora la dejamos así
-    return ['Smartwatches', 'Audio', 'Proyectores'];
-  }
-
+  // MÉTODO RESTAURADO
   getProductById(id: string): Observable<Product> {
     const productDoc = doc(this.firestore, `products/${id}`);
     return docData(productDoc, { idField: 'id' }) as Observable<Product>;
+  }
+
+  // MÉTODO RESTAURADO (versión simple por ahora)
+  getCategories(): string[] {
+    // A futuro, esto debería leer las categorías desde la base de datos
+    return ['Smartwatches', 'Audio', 'Proyectores', 'Gatillos'];
+  }
+
+  async uploadImage(file: File): Promise<string> {
+    const filePath = `product-images/${Date.now()}_${file.name}`;
+    const storageRef = ref(this.storage, filePath);
+    await uploadBytes(storageRef, file);
+    const downloadUrl = await getDownloadURL(storageRef);
+    return downloadUrl;
   }
 
   addProduct(productData: Omit<Product, 'id'>): Promise<any> {
@@ -37,7 +43,6 @@ export class ProductService {
 
   updateProduct(product: Product): Promise<void> {
     const productDoc = doc(this.firestore, `products/${product.id}`);
-    // 'id' no se puede actualizar, así que lo separamos
     const { id, ...dataToUpdate } = product;
     return updateDoc(productDoc, dataToUpdate);
   }

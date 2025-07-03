@@ -22,11 +22,13 @@ export class Search implements OnInit {
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    // Nos suscribimos al observable products$
+    // Se suscribe al observable de productos
     this.productService.products$.subscribe(products => {
       this.allProducts = products;
-      this.applyFilters(); // Re-aplicamos los filtros cada vez que la lista de productos cambia
+      this.applyFilters();
     });
+
+    // Llama al método que ahora sí existe
     this.categories = this.productService.getCategories();
   }
 
