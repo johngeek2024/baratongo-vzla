@@ -11,15 +11,14 @@
   <div *ngIf="!isLoading; else loadingBlock">
     <div class="products-grid" [@listAnimation]="featuredProducts.length">
       <app-product-card *ngFor="let product of featuredProducts"
-        [imageUrl]="product.imageUrl"
-        [productName]="product.name"
-        [price]="product.price"
-        [productId]="product.id">
+        [product]="product">
       </app-product-card>
     </div>
   </div>
 
   <ng-template #loadingBlock>
-    <app-loading-spinner></app-loading-spinner>
+    <div class="products-grid">
+      <app-skeleton-card *ngFor="let item of [1, 2, 3]"></app-skeleton-card>
+    </div>
   </ng-template>
 </section>

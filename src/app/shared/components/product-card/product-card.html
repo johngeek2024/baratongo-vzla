@@ -1,11 +1,14 @@
-<a [routerLink]="['/producto', productId]" class="card-link">
-  <article class="product-card">
-    <div class="product-image-container">
-      <img [src]="imageUrl" [alt]="productName" class="product-image">
-    </div>
-    <div class="product-info">
-      <h3 class="product-name">{{ productName }}</h3>
-      <p class="product-price">{{ price | currency:'USD':'symbol':'1.2-2' }}</p>
-    </div>
-  </article>
-</a>
+<div *ngIf="product">
+  <a [routerLink]="['/producto', product.id]" class="card-link">
+    <article class="product-card">
+      <div class="product-image-container">
+        <span *ngIf="product.isBestseller" class="bestseller-badge">Más Vendido</span>
+        <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-price">{{ product.price | currency:'USD' }}</p>
+      </div>
+    </article>
+  </a>
+</div>

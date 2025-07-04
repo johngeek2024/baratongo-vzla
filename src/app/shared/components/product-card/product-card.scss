@@ -2,30 +2,50 @@
   display: block;
 }
 
+.card-link {
+  text-decoration: none; // Quita el subrayado del enlace
+}
+
 .product-card {
   background-color: var(--background-white);
-  border-radius: 12px;
+  border-radius: 16px; // Más redondeado
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+  border: 1px solid var(--border-color); // Un borde sutil en lugar de sombra
+  transition: border-color 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: var(--text-primary);
   }
 }
 
 .product-image-container {
+  position: relative; // Para posicionar la insignia
   width: 100%;
   aspect-ratio: 1 / 1;
   background-color: var(--background-light);
+}
+
+.bestseller-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: var(--text-primary);
+  color: var(--background-white);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 1;
 }
 
 .product-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease;
+  .card-link:hover & { // Efecto de zoom en la imagen al pasar el mouse por la tarjeta
+    transform: scale(1.05);
+  }
 }
 
 .product-info {
@@ -34,7 +54,7 @@
 
 .product-name {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500; // Un poco menos grueso
   color: var(--text-primary);
   margin: 0 0 8px 0;
   display: -webkit-box;

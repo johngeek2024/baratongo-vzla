@@ -5,12 +5,12 @@ import { ProductService } from '../../../core/services/product';
 import { Product } from '../../../core/models/product.model';
 import { Title, Meta } from '@angular/platform-browser';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
-import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner'; // Importar spinner
+import { SkeletonCard } from '../../../shared/components/skeleton-card/skeleton-card';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ProductCard, LoadingSpinner], // Añadir LoadingSpinner
+  imports: [CommonModule, ProductCard, SkeletonCard],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
   animations: [
@@ -28,7 +28,7 @@ import { LoadingSpinner } from '../../../shared/components/loading-spinner/loadi
 })
 export class Home implements OnInit {
   featuredProducts: Product[] = [];
-  isLoading: boolean = true; // 1. Propiedad para el estado de carga
+  isLoading: boolean = true;
 
   constructor(
     private productService: ProductService,
@@ -38,11 +38,14 @@ export class Home implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('BaratongoVzla - Buenos precios y mejor calidad');
-    this.metaService.updateTag({ name: 'description', content: 'Tu tienda de electrónica y accesorios gamer en Valencia.' });
+    this.metaService.updateTag({
+      name: 'description',
+      content: 'Tu tienda de electrónica y accesorios gamer en Valencia. Encuentra los mejores precios en proyectores, smartwatch, audífonos y más.'
+    });
 
     this.productService.products$.subscribe(products => {
       this.featuredProducts = products;
-      this.isLoading = false; // 2. Cuando llegan los datos, se desactiva
+      this.isLoading = false;
     });
   }
 }

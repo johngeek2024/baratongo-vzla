@@ -1,58 +1,80 @@
 <div class="checkout-page-container">
   <h1 class="page-title">Finalizar Compra</h1>
   <div class="checkout-content">
-    <div class="info-column">
+    <div class="info-column" [formGroup]="checkoutForm">
+
       <div class="form-section">
         <h2>1. Información de Contacto</h2>
+        <div class="form-group">
+          <label for="name">Nombre y Apellido</label>
+          <input type="text" id="name" placeholder="Ej: Jonathan Pantoja" formControlName="name">
         </div>
+        <div class="form-group">
+          <label for="phone">Teléfono</label>
+          <input type="tel" id="phone" placeholder="Ej: 0412-1234567" formControlName="phone">
+        </div>
+      </div>
 
       <div class="form-section">
         <h2>2. Método de Entrega</h2>
-        <div class="primary-option">
-          <input type="radio" id="pickup" name="deliveryMethod" value="pickup" (change)="onDeliveryMethodChange('pickup')" [checked]="deliveryMethod === 'pickup'">
-          <label for="pickup">Retirar en Puntos Gratuitos</label>
 
+        <div class="primary-option">
+          <input type="radio" id="pickup" value="pickup" formControlName="deliveryMethod" name="deliveryMethod" (change)="onDeliveryMethodChange('pickup')">
+          <label for="pickup">Retirar en Puntos Gratuitos</label>
           <div class="conditional-content" *ngIf="deliveryMethod === 'pickup'">
-            <div class="delivery-option">... Colegio Luz ...</div>
-            <div class="delivery-option" *ngIf="cartTotal >= deliveryMinAmount">... Metro Lara ...</div>
-            <div class="delivery-option" *ngIf="cartTotal >= deliveryMinAmount">... Metro Cedeño ...</div>
-            <div class="delivery-option" *ngIf="cartTotal >= deliveryMinAmount">... Torre Banaven ...</div>
+            <div class="delivery-option">
+              <input type="radio" id="pickup-luz" value="luz" formControlName="pickupPoint" name="pickupPoint">
+              <label for="pickup-luz">Colegio Luz de Carabobo (Sin mínimo)</label>
+            </div>
+
+            <div *ngIf="cartTotal >= deliveryMinAmount" class="delivery-option">
+              <input type="radio" id="pickup-lara" value="lara" formControlName="pickupPoint" name="pickupPoint">
+              <label for="pickup-lara">Metro Estación Lara (Mín. {{deliveryMinAmount | currency:'USD'}})</label>
+            </div>
+            <div *ngIf="cartTotal >= deliveryMinAmount" class="delivery-option">
+              <input type="radio" id="pickup-cedeno" value="cedeno" formControlName="pickupPoint" name="pickupPoint">
+              <label for="pickup-cedeno">Metro Estación Cedeño (Mín. {{deliveryMinAmount | currency:'USD'}})</label>
+            </div>
+            <div *ngIf="cartTotal >= deliveryMinAmount" class="delivery-option">
+              <input type="radio" id="pickup-banaven" value="banaven" formControlName="pickupPoint" name="pickupPoint">
+              <label for="pickup-banaven">Torre Banaven (Mín. {{deliveryMinAmount | currency:'USD'}})</label>
+            </div>
           </div>
         </div>
 
         <div class="primary-option">
-          <input type="radio" id="local_delivery" name="deliveryMethod" value="local_delivery" (change)="onDeliveryMethodChange('local_delivery')" [checked]="deliveryMethod === 'local_delivery'">
+          <input type="radio" id="local_delivery" value="local_delivery" formControlName="deliveryMethod" name="deliveryMethod" (change)="onDeliveryMethodChange('local_delivery')">
           <label for="local_delivery">Delivery Local en Valencia (Costo Adicional)</label>
-
           <div class="conditional-content" *ngIf="deliveryMethod === 'local_delivery'">
-            <p><strong>Dirección de Entrega:</strong></p>
-            <div class="form-group"> ... Campo para dirección ... </div>
-            <p><strong>Elige una opción:</strong></p>
+            <div class="form-group">
+              <label for="address">Dirección de Entrega</label>
+              <input type="text" id="address" placeholder="Urb, Calle, Nro de Casa/Apto" formControlName="localAddress">
+            </div>
             <div class="delivery-option">
-              <input type="radio" id="moto" name="localDeliveryType" value="moto" (change)="onLocalDeliveryTypeChange('moto')" [checked]="localDeliveryType === 'moto'">
+              <input type="radio" id="moto" value="moto" formControlName="localDeliveryType" name="localDeliveryType" (change)="onLocalDeliveryTypeChange('moto')">
               <label for="moto">Moto (Ridery/Yummy) - Tarifa: {{ motoFee | currency:'USD' }}</label>
             </div>
             <div class="delivery-option">
-              <input type="radio" id="carro" name="localDeliveryType" value="carro" (change)="onLocalDeliveryTypeChange('carro')" [checked]="localDeliveryType === 'carro'">
+              <input type="radio" id="carro" value="carro" formControlName="localDeliveryType" name="localDeliveryType" (change)="onLocalDeliveryTypeChange('carro')">
               <label for="carro">Carro (Entrega Personal) - Tarifa: {{ carroFee | currency:'USD' }}</label>
             </div>
           </div>
         </div>
 
         <div class="primary-option">
-          <input type="radio" id="national_shipping" name="deliveryMethod" value="national_shipping" (change)="onDeliveryMethodChange('national_shipping')" [checked]="deliveryMethod === 'national_shipping'">
+          <input type="radio" id="national_shipping" value="national_shipping" formControlName="deliveryMethod" name="deliveryMethod" (change)="onDeliveryMethodChange('national_shipping')">
           <label for="national_shipping">Envío Nacional (Cobro a Destino)</label>
-
           <div class="conditional-content" *ngIf="deliveryMethod === 'national_shipping'">
-            <p><strong>Dirección de Envío:</strong></p>
-            <div class="form-group"> ... Campos de dirección de envío ... </div>
-            <p><strong>Elige una opción:</strong></p>
+            <div class="form-group">
+                <label for="nationalAddress">Dirección de Envío Completa</label>
+                <textarea id="nationalAddress" rows="3" placeholder="Estado, Ciudad, Oficina de Encomiendas..." formControlName="nationalAddress"></textarea>
+            </div>
             <div class="delivery-option">
-              <input type="radio" id="mrw" name="nationalCourier" value="mrw" checked>
+              <input type="radio" id="mrw" value="mrw" formControlName="nationalCourier" name="nationalCourier">
               <label for="mrw">MRW</label>
             </div>
             <div class="delivery-option">
-              <input type="radio" id="zoom" name="nationalCourier" value="zoom">
+              <input type="radio" id="zoom" value="zoom" formControlName="nationalCourier" name="nationalCourier">
               <label for="zoom">Zoom</label>
             </div>
           </div>
@@ -61,15 +83,17 @@
 
       <div class="form-section">
         <h2>3. Método de Pago</h2>
-        <div class="payment-option">... Pago Móvil ...</div>
-        <div class="payment-option">... Binance Pay ...</div>
-
+        <div class="payment-option">
+          <input type="radio" id="pago_movil" value="pago_movil" formControlName="paymentMethod" name="paymentMethod">
+          <label for="pago_movil">Pago Móvil (Bs.)</label>
+        </div>
+        <div class="payment-option">
+          <input type="radio" id="binance" value="binance" formControlName="paymentMethod" name="paymentMethod">
+          <label for="binance">Binance Pay (USDT)</label>
+        </div>
         <div class="payment-option" *ngIf="deliveryMethod === 'pickup' || (deliveryMethod === 'local_delivery' && localDeliveryType === 'carro')">
-          <input type="radio" id="cash" name="paymentMethod" value="cash">
-          <label for="cash">
-            <span class="option-title">USD en Efectivo</span>
-            <span class="option-detail">Pagar al momento de la entrega.</span>
-          </label>
+          <input type="radio" id="cash" value="cash" formControlName="paymentMethod" name="paymentMethod">
+          <label for="cash">USD en Efectivo</label>
         </div>
       </div>
     </div>

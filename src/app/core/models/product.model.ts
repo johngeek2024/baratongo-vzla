@@ -1,8 +1,9 @@
 export interface Product {
-  id: string; // CAMBIADO de number a string
+  id: string;
   name: string;
   price: number;
   imageUrl: string;
   description: string;
   category: string;
+  isBestseller?: boolean; // <-- AÑADIR ESTA LÍNEA
 }

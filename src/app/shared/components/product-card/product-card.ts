@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Product } from '../../../core/models/product.model';
 
 @Component({
   selector: 'app-product-card',
@@ -10,8 +11,6 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./product-card.scss']
 })
 export class ProductCard {
-  @Input() imageUrl: string = '';
-  @Input() productName: string = '';
-  @Input() price: number = 0;
-  @Input() productId: string = ''; // CAMBIADO de number a string
+  // Ahora recibimos el objeto de producto completo
+  @Input() product: Product | null = null;
 }

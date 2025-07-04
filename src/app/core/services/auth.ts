@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 
 // ¡Nuevas importaciones de Firebase Auth!
 import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, User } from '@angular/fire/auth';
@@ -9,8 +10,8 @@ import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPass
   providedIn: 'root'
 })
 export class AuthService {
-  // 1. Inyectamos el servicio de Auth de Firebase
   private auth: Auth = inject(Auth);
+  private firestore: Firestore = inject(Firestore); // Inyectar Firestore
 
   // 2. Obtenemos el estado de autenticación y los datos del usuario directamente de Firebase
   public isLoggedIn$: Observable<boolean> = authState(this.auth).pipe(map(user => !!user));
@@ -33,8 +34,17 @@ export class AuthService {
   async register(name: string, email: string, password: string): Promise<User | null> {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      // Actualizamos el perfil del usuario para añadir su nombre
       await updateProfile(userCredential.user, { displayName: name });
+
+      // Guardar datos adicionales en Firestore
+      const userDocRef = doc(this.firestore, `users/${userCredential.user.uid}`);
+      await setDoc(userDocRef, {
+        uid: userCredential.user.uid,
+        email: email,
+        displayName: name,
+        // Aquí podemos añadir más campos en el futuro
+      });
+
       return userCredential.user;
     } catch (error) {
       console.error("Error en el registro:", error);
