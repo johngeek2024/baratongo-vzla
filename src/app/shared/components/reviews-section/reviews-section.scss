@@ -1,0 +1,13 @@
+.reviews-section { padding: 3rem 0; text-align: center; }
+.reviews-summary { margin-bottom: 2rem; }
+.reviews-summary h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+.reviews-summary .stars { color: var(--color-trustpilot-green); font-size: 1.2rem; margin-bottom: 0.5rem; }
+.reviews-summary p { color: var(--color-text-secondary); }
+.reviews-summary p strong { color: var(--color-text-primary); }
+.reviews-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2rem; }
+.review-card { background-color: var(--color-dark-secondary); padding: 1.5rem; border-radius: var(--border-radius-base); text-align: left; border: 1px solid rgba(255,255,255,0.1); }
+.review-card .stars { color: var(--color-trustpilot-green); margin-bottom: 1rem; }
+.review-card p { color: var(--color-text-secondary); font-style: italic; line-height: 1.6; margin-bottom: 1rem; }
+.review-card .author { font-weight: 700; color: var(--color-text-primary); }
+@media (min-width: 540px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }

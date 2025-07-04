@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TabBar } from '../components/tab-bar/tab-bar'; // CORREGIDO
+
+// Rutas corregidas basadas en tu estructura de carpetas
+import { Header } from '../components/header/header';
+import { BottomNav } from '../components/bottom-nav/bottom-nav';
+import { Footer } from '../components/footer/footer';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, TabBar], // CORREGIDO
+  imports: [CommonModule, RouterModule, Header, BottomNav, Footer],
   templateUrl: './layout.html',
   styleUrls: ['./layout.scss']
 })
-export class Layout {} // CORREGIDO
+export class Layout {
+
+}

@@ -1,40 +1,35 @@
-// 1. Importar la fuente "Inter" desde Google Fonts con diferentes grosores
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-// Paleta de Colores Centralizada (CSS Custom Properties)
+// 1. Paleta de Colores Centralizada del Nuevo Diseño
 :root {
-  --primary-color: #0071e3;
-  --primary-color-hover: #0077ed;
-  --text-primary: #1d1d1f;
-  --text-secondary: #6e6e73;
-  --background-light: #f5f5f7;
-  --background-white: #ffffff;
-  --border-color: #d2d2d7;
-  --error-color: #d9363e;
-  --success-color: #34c759;
+    --color-dark-primary: #0D0D10;
+    --color-dark-secondary: #1A1A1E;
+    --color-text-primary: #F5F5F7;
+    --color-text-secondary: #A1A1A6;
+    --color-accent: #00FFFF; // Cian como color de acento
+    --color-trustpilot-green: #00b67a;
+    --font-family-base: 'Inter', sans-serif;
+    --border-radius-base: 8px;
+    --transition-speed: 0.3s;
+    --header-height: 70px;
+    --bottom-nav-height: 65px;
 }
 
-/* Reset básico para consistencia entre navegadores */
+// 2. Resets y Estilos Globales
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Reset específico para controlar márgenes de texto comunes */
-h1, h2, h3, h4, h5, h6, p {
-  margin: 0;
-}
-
-/* Estilos base para el cuerpo de la aplicación */
 body {
-  // 2. Aplicar la nueva fuente a toda la aplicación
-  font-family: 'Inter', sans-serif;
-  background-color: #f5f5f7;
-  // Añadimos un suavizado de fuente para un look más nítido
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-dark-primary);
+    font-family: var(--font-family-base);
+    color: var(--color-text-primary);
+    // Padding para que el contenido no quede debajo del header y nav fijos
+    padding-top: var(--header-height);
+    padding-bottom: var(--bottom-nav-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Importación de la librería de iconos */
+// 3. Importación de Bootstrap Icons (los mantendremos por si los necesitamos)
 @import 'bootstrap-icons/font/bootstrap-icons.css';

@@ -1,0 +1,16 @@
+.offer-banner {
+    background-color: var(--color-accent);
+    color: var(--color-dark-primary);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: var(--border-radius-base);
+    text-align: center;
+}
+.offer-banner h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+.offer-banner p {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+}

@@ -1,0 +1,22 @@
+<header class="top-header">
+    <a routerLink="/inicio" class="logo-link">
+        <!-- Usamos tu isologo blanco -->
+        <img src="assets/isologo-blanco.svg" alt="Logo de BaratongoVzla" class="logo-img">
+    </a>
+
+    <!-- Navegación para escritorio (se mostrará en pantallas grandes) -->
+    <nav class="desktop-nav">
+        <a routerLink="/inicio" routerLinkActive="is-active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+        <a routerLink="/busqueda">Catálogo</a>
+        <!-- A futuro podríamos añadir más enlaces aquí -->
+    </nav>
+
+    <div class="header-actions">
+        <a routerLink="/busqueda" class="header-action-icon">
+            <i class="fas fa-search"></i>
+        </a>
+        <a routerLink="/carrito" class="header-action-icon desktop-only-icon">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+    </div>
+</header>

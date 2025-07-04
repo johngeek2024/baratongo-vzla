@@ -1,0 +1,18 @@
+<nav class="bottom-nav">
+    <a routerLink="/inicio" routerLinkActive="is-active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
+        <i class="fas fa-home"></i><span>Inicio</span>
+    </a>
+    <a href="https://wa.me/TUNUMERO" target="_blank" class="nav-item">
+        <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
+    </a>
+    <a routerLink="/carrito" routerLinkActive="is-active" class="nav-item nav-item--cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+    </a>
+    <a routerLink="/" class="nav-item">
+        <i class="fas fa-heart"></i><span>Favoritos</span>
+    </a>
+    <a routerLink="/busqueda" routerLinkActive="is-active" class="nav-item">
+        <i class="fas fa-search"></i><span>Buscar</span>
+    </a>
+</nav>

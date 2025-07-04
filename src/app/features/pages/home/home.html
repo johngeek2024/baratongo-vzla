@@ -1,37 +1,51 @@
-<section class="hero-section">
-  <div class="hero-content">
-    <img src="assets/logo.svg" alt="Logo de BaratongoVzla" class="hero-logo">
-    <p class="hero-slogan">Buenos precios y mejor calidad.</p>
-  </div>
-</section>
+<div class="main-container">
 
-<section class="products-section">
-  <div class="section-header">
-    <h2 class="section-title">Productos Destacados</h2>
-  </div>
+    <section class="hero-section">
+      <h1>La Tecnología que Quieres, al <span class="highlight">Siguiente Nivel</span></h1>
+      <p>"Buenos precios y mejor calidad"</p>
+      <a routerLink="/busqueda" class="hero-cta">Explorar Productos</a>
+    </section>
 
-  <div class="carousel">
-    <div class="carousel-inner" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
-      <div class="carousel-slide" *ngFor="let product of allProducts">
-        <app-product-card [product]="product"></app-product-card>
-      </div>
-    </div>
+    <app-offer-banner></app-offer-banner>
 
-    <button class="carousel-control prev" (click)="prevSlide()" [disabled]="currentSlide === 0">
-      <i class="bi bi-chevron-left"></i>
-    </button>
-    <button class="carousel-control next" (click)="nextSlide()" [disabled]="currentSlide >= allProducts.length - 1">
-      <i class="bi bi-chevron-right"></i>
-    </button>
-  </div>
-</section>
+    <section class="visual-categories">
+        <a routerLink="/busqueda" class="category-card">
+            <img src="https://placehold.co/600x400/1A1A1E/00FFFF?text=Gaming+Móvil" alt="Categoría Gaming Móvil" class="category-card__bg">
+            <h3 class="category-card__title">Gaming Móvil</h3>
+        </a>
+        <a routerLink="/busqueda" class="category-card">
+            <img src="https://placehold.co/600x400/1A1A1E/FFFFFF?text=Proyectores" alt="Categoría Proyectores" class="category-card__bg">
+            <h3 class="category-card__title">Proyectores</h3>
+        </a>
+        <a routerLink="/busqueda" class="category-card">
+            <img src="https://placehold.co/600x400/1A1A1E/FFFFFF?text=Smartwatch" alt="Categoría Smartwatch" class="category-card__bg">
+            <h3 class="category-card__title">Smartwatch</h3>
+        </a>
+        <a routerLink="/busqueda" class="category-card">
+            <img src="https://placehold.co/600x400/1A1A1E/FFFFFF?text=Seguridad" alt="Categoría Cámaras de Seguridad" class="category-card__bg">
+            <h3 class="category-card__title">Seguridad</h3>
+        </a>
+    </section>
 
-<section class="products-section recently-added">
-  <div class="section-header">
-    <h2 class="section-title">Nuestro Catálogo</h2>
-    <a routerLink="/busqueda" class="view-more">Ver más <i class="bi bi-arrow-right-short"></i></a>
-  </div>
-  <div class="products-grid">
-    <app-product-card *ngFor="let product of allProducts | slice:0:4" [product]="product"></app-product-card>
-  </div>
-</section>
+    <section class="product-showcase">
+        <div class="section-header">
+            <h2 class="section-title">Novedades</h2>
+            <a routerLink="/busqueda" class="view-more">Ver todo <i class="bi bi-arrow-right-short"></i></a>
+        </div>
+        <div *ngIf="!isLoading; else loadingBlock">
+            <div class="products-grid">
+              <app-product-card *ngFor="let product of allProducts" [product]="product"></app-product-card>
+            </div>
+        </div>
+        <ng-template #loadingBlock>
+            <div class="products-grid">
+              <app-skeleton-card *ngFor="let i of [1, 2, 3, 4]"></app-skeleton-card>
+            </div>
+        </ng-template>
+    </section>
+
+    <app-reviews-section></app-reviews-section>
+
+    <app-trust-section></app-trust-section>
+
+</div>

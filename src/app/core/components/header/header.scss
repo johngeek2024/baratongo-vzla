@@ -1,0 +1,81 @@
+.top-header {
+    background-color: var(--color-dark-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    height: var(--header-height);
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 45px; // Ajusta según el tamaño de tu logo
+    width: auto;
+}
+
+.desktop-nav {
+    display: none; // Oculto en móviles por defecto
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header-action-icon {
+    color: var(--color-text-secondary);
+    font-size: 1.2rem;
+    transition: color var(--transition-speed) ease;
+    &:hover {
+        color: var(--color-text-primary);
+    }
+}
+
+.header-actions .desktop-only-icon {
+    display: none; // Oculto en móviles por defecto
+}
+
+// Media Query para Escritorio
+@media (min-width: 768px) {
+    .top-header {
+        padding: 0 2.5rem;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 2rem;
+    }
+
+    .desktop-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-speed) ease;
+            &.is-active, &:hover {
+                color: var(--color-text-primary);
+            }
+        }
+    }
+
+    .header-actions {
+        grid-column: 3 / 4;
+        justify-content: flex-end;
+        .desktop-only-icon {
+            display: inline-block;
+        }
+    }
+}
