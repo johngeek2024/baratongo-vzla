@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
@@ -7,19 +7,25 @@ import { Product } from '../../../core/models/product.model';
 import { CartService } from '../../../core/services/cart';
 import { SeoService } from '../../../core/services/seo';
 import { NotificationService } from '../../../core/services/notification';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, map, take } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { ProductCard } from '../../../shared/components/product-card/product-card';
+
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ProductCard],
   templateUrl: './product-detail.html',
   styleUrls: ['./product-detail.scss']
 })
 export class ProductDetail implements OnInit, OnDestroy {
-  product$!: Observable<Product>;
+  product$!: Observable<Product | undefined>;
+  relatedProducts$!: Observable<Product[]>;
   private product: Product | null = null;
+  private routeSub!: Subscription;
+
+  @ViewChild('relatedGrid') relatedGrid!: ElementRef<HTMLDivElement>;
 
   activeImageUrl: string = '';
   activeTab: 'description' | 'specs' | 'reviews' = 'description';
@@ -32,22 +38,41 @@ export class ProductDetail implements OnInit, OnDestroy {
     private titleService: Title,
     private metaService: Meta,
     private seoService: SeoService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.product$ = this.productService.getProductById(id).pipe(
-        tap(productData => {
-          if (productData) {
-            this.product = productData;
-            this.activeImageUrl = productData.gallery ? productData.gallery[0] : productData.imageUrl;
-            this.setupSeo(productData);
-          }
-        })
-      );
-    }
+    this.routeSub = this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.loadProduct(id);
+        window.scrollTo(0, 0);
+      }
+    });
+  }
+
+  loadProduct(id: string): void {
+    this.product$ = this.productService.getProductById(id).pipe(
+      tap(productData => {
+        if (productData) {
+          this.product = productData;
+          this.activeImageUrl = productData.gallery && productData.gallery.length > 0
+            ? productData.gallery[0]
+            : productData.imageUrl;
+          this.setupSeo(productData);
+          this.loadRelatedProducts(id, productData.category);
+          this.cd.detectChanges();
+        }
+      })
+    );
+  }
+
+  loadRelatedProducts(currentProductId: string, category: string): void {
+    this.relatedProducts$ = this.productService.products$.pipe(
+      take(1),
+      map(products => products.filter(p => p.id !== currentProductId && p.category === category).slice(0, 4))
+    );
   }
 
   setupSeo(product: Product): void {
@@ -59,6 +84,9 @@ export class ProductDetail implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.seoService.removeSchema();
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
   }
 
   selectImage(imageUrl: string): void {
@@ -78,9 +106,30 @@ export class ProductDetail implements OnInit, OnDestroy {
 
   onAddToCart(): void {
     if (this.product) {
-      const productToAdd = { ...this.product, quantity: this.quantity };
-      this.cartService.addToCart(productToAdd);
+      for (let i = 0; i < this.quantity; i++) {
+        this.cartService.addToCart(this.product);
+      }
       this.notificationService.showSuccess(`'${this.product.name}' (x${this.quantity}) añadido al carrito`, '¡Éxito!');
     }
+  }
+
+  getReviewsCountByRating(rating: number): number {
+    if (!this.product || !this.product.reviews) {
+      return 0;
+    }
+    return this.product.reviews.filter(r => r.rating === rating).length;
+  }
+
+  scrollRelated(direction: 'prev' | 'next'): void {
+    if (!this.relatedGrid) return;
+    const grid = this.relatedGrid.nativeElement;
+    const card = grid.querySelector('app-product-card');
+    if (!card) return;
+
+    const cardWidth = card.clientWidth;
+    const gap = parseInt(window.getComputedStyle(grid).gap);
+    const scrollAmount = direction === 'next' ? cardWidth + gap : -(cardWidth + gap);
+
+    grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   }
 }

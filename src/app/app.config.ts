@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withHashLocation } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router'; // Se incluye withHashLocation
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideClientHydration } from '@angular/platform-browser';
 
@@ -8,7 +8,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { provideToastr } from 'ngx-toastr'; // 1. Importar
+import { provideToastr } from 'ngx-toastr';
 
 // Tu configuración de Firebase
 const firebaseConfig = {
@@ -23,10 +23,10 @@ const firebaseConfig = {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withHashLocation()),
+    provideRouter(routes, withHashLocation()), // Se mantiene la estrategia de Hash
     provideAnimations(),
-    provideToastr(), // 2. Añadir el proveedor de Toastr
     provideClientHydration(),
+    provideToastr(),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

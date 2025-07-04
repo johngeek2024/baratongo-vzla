@@ -1,41 +1,44 @@
 <div class="main-container">
-  <section class="hero-section">
-    <h1>La Tecnología que Quieres, al <span class="highlight">Siguiente Nivel</span></h1>
-    <p>"Buenos precios y mejor calidad"</p>
-    <a routerLink="/busqueda" class="hero-cta">Explorar Productos</a>
-  </section>
 
-  <app-offer-banner></app-offer-banner>
+    <section class="hero-section">
+      <h1>La Tecnología que Quieres, al <span class="highlight">Siguiente Nivel</span></h1>
+      <p>"Buenos precios y mejor calidad"</p>
+      <a routerLink="/busqueda" class="hero-cta">Explorar Productos</a>
+    </section>
 
-  <section class="visual-categories">
-    <a routerLink="/busqueda" class="category-card">
-        <img src="https://placehold.co/600x400/1A1A1E/00FFFF?text=Gaming+Móvil" alt="Categoría Gaming Móvil" class="category-card__bg">
-        <h3 class="category-card__title">Gaming Móvil</h3>
-    </a>
-    <a routerLink="/busqueda" class="category-card">
-        <img src="https://placehold.co/600x400/1A1A1E/FFFFFF?text=Proyectores" alt="Categoría Proyectores" class="category-card__bg">
-        <h3 class="category-card__title">Proyectores</h3>
-    </a>
-    <a routerLink="/busqueda" class="category-card">
-        <img src="https://placehold.co/600x400/1A1A1E/FFFFFF?text=Smartwatch" alt="Categoría Smartwatch" class="category-card__bg">
-        <h3 class="category-card__title">Smartwatch</h3>
-    </a>
-    <a routerLink="/busqueda" class="category-card">
-        <img src="https://placehold.co/600x400/1A1A1E/FFFFFF?text=Seguridad" alt="Categoría Cámaras de Seguridad" class="category-card__bg">
-        <h3 class="category-card__title">Seguridad</h3>
-    </a>
-  </section>
+    <app-offer-banner></app-offer-banner>
 
-  <section class="product-showcase">
-    <div class="section-header">
-        <h2 class="section-title">Novedades</h2>
-        <a routerLink="/busqueda" class="view-more">Ver todo <i class="bi bi-arrow-right-short"></i></a>
-    </div>
-    <div class="products-grid" *ngIf="(products$ | async) as products">
-      <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
-    </div>
-  </section>
+    <section class="visual-categories">
+        <a routerLink="/busqueda" class="category-card">
+            <img src="https://placehold.co/600x400/1A1A1E/00FFFF?text=Gaming+Móvil" alt="Categoría Gaming Móvil" class="category-card__bg">
+            <h3 class="category-card__title">Gaming Móvil</h3>
+        </a>
+        <a routerLink="/busqueda" class="category-card">
+            <img src="https://placehold.co/600x400/1A1A1E/FFFFFF?text=Proyectores" alt="Categoría Proyectores" class="category-card__bg">
+            <h3 class="category-card__title">Proyectores</h3>
+        </a>
+        <a routerLink="/busqueda" class="category-card">
+            <img src="https://placehold.co/600x400/1A1A1E/FFFFFF?text=Smartwatch" alt="Categoría Smartwatch" class="category-card__bg">
+            <h3 class="category-card__title">Smartwatch</h3>
+        </a>
+        <a routerLink="/busqueda" class="category-card">
+            <img src="https://placehold.co/600x400/1A1A1E/FFFFFF?text=Seguridad" alt="Categoría Cámaras de Seguridad" class="category-card__bg">
+            <h3 class="category-card__title">Seguridad</h3>
+        </a>
+    </section>
 
-  <app-reviews-section></app-reviews-section>
-  <app-trust-section></app-trust-section>
+    <section class="product-showcase">
+        <div class="section-header">
+            <h2 class="section-title">Novedades</h2>
+            <a routerLink="/busqueda" class="view-more">Ver todo <i class="bi bi-arrow-right-short"></i></a>
+        </div>
+        <div class="products-grid" *ngIf="(products$ | async) as products" [@listAnimation]="products.length">
+          <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        </div>
+    </section>
+
+    <app-reviews-section></app-reviews-section>
+
+    <app-trust-section></app-trust-section>
+
 </div>

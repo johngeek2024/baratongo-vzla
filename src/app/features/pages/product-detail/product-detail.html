@@ -15,9 +15,9 @@
         <section class="product-info">
             <div class="category">{{ product.category }}</div>
             <h1>{{ product.name }}</h1>
-            <div class="product-rating" *ngIf="product.reviews">
+            <div class="product-rating" *ngIf="product.reviews && product.reviews.length > 0">
                 <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
-                <span>({{ product.reviews.length || 0 }} reseñas)</span>
+                <span>({{ product.reviews.length }} reseñas)</span>
             </div>
             <div class="stock-status in-stock" *ngIf="product.stockStatus === 'in-stock'">
                 <i class="fas fa-check-circle"></i> En Stock
@@ -28,7 +28,7 @@
                 <div class="option-group">
                     <label>Cantidad</label>
                     <div class="quantity-selector">
-                        <button (click)="changeQuantity(-1)">-</button>
+                        <button (click)="changeQuantity(-1)" [disabled]="quantity <= 1">-</button>
                         <input type="number" [value]="quantity" min="1" readonly>
                         <button (click)="changeQuantity(1)">+</button>
                     </div>
@@ -38,6 +38,14 @@
             <button class="add-to-cart-btn" (click)="onAddToCart()">
                 <i class="fas fa-shopping-cart"></i> Agregar al Carrito
             </button>
+
+            <div class="delivery-info">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <span>Retira <strong>GRATIS</strong> en nuestros puntos de entrega en Valencia.</span>
+                    <a routerLink="/checkout">Ver puntos</a>
+                </div>
+            </div>
         </section>
 
         <section class="product-details-tabs">
@@ -59,14 +67,57 @@
                 </div>
             </div>
             <div class="tab-content" [class.active]="activeTab === 'reviews'">
-                <div class="review-item" *ngFor="let review of product.reviews">
-                    <div class="review-author">
-                        <span class="author-name">{{ review.author }}</span>
-                        <span class="verified-purchase" *ngIf="review.isVerifiedPurchase"><i class="fas fa-check-circle"></i> Compra Verificada</span>
-                    </div>
-                    <p class="review-text">"{{ review.text }}"</p>
+                <div class="reviews-tab-content" *ngIf="product.reviews">
+                    <aside class="reviews-overview">
+                        <h3>4.8 de 5</h3>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <p>Basado en {{ product.reviews.length }} reseñas</p>
+                        <hr>
+                        <div class="rating-bar">
+                            <span>5<i class="fas fa-star"></i></span>
+                            <div class="bar-container"><div class="bar" style="width: 80%;"></div></div>
+                            <span>{{ getReviewsCountByRating(5) }}</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>4<i class="fas fa-star"></i></span>
+                            <div class="bar-container"><div class="bar" style="width: 20%;"></div></div>
+                            <span>{{ getReviewsCountByRating(4) }}</span>
+                        </div>
+                    </aside>
+                    <main class="review-list">
+                        <div class="review-list-header">
+                            <h3>Reseñas de Clientes</h3>
+                            <button class="write-review-btn">Escribe una reseña</button>
+                        </div>
+                        <div class="review-item" *ngFor="let review of product.reviews">
+                            <div class="review-author">
+                                <span class="author-name">{{ review.author }}</span>
+                                <span class="verified-purchase" *ngIf="review.isVerifiedPurchase"><i class="fas fa-check-circle"></i> Compra Verificada</span>
+                            </div>
+                            <div class="stars">
+                                <i *ngFor="let i of [].constructor(review.rating)" class="fas fa-star"></i>
+                            </div>
+                            <p class="review-text">"{{ review.text }}"</p>
+                        </div>
+                    </main>
                 </div>
             </div>
         </section>
+
+        <section class="related-products" *ngIf="(relatedProducts$ | async)?.length">
+            <div class="related-products-header">
+                <h2>También te podría interesar</h2>
+                <div class="carousel-nav">
+                    <button class="carousel-btn" (click)="scrollRelated('prev')"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-btn" (click)="scrollRelated('next')"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="related-grid-wrapper">
+                <div class="related-grid" #relatedGrid>
+                    <app-product-card *ngFor="let relProduct of (relatedProducts$ | async)" [product]="relProduct"></app-product-card>
+                </div>
+            </div>
+        </section>
+
     </article>
 </div>

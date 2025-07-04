@@ -9,8 +9,6 @@
 }
 
 .product-page {
-  max-width: 1200px;
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
@@ -32,10 +30,13 @@
   margin-top: 1rem;
   overflow-x: auto;
   padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) var(--color-dark-primary);
 }
 
 .thumbnail-item {
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .thumbnails img {
@@ -82,12 +83,17 @@
 }
 
 .stock-status {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.8rem;
   font-weight: 500;
   padding: 4px 10px;
   border-radius: 20px;
   margin-top: 1rem;
+}
+
+.stock-status.in-stock {
   color: var(--color-success);
   background-color: rgba(40, 167, 69, 0.1);
 }
@@ -99,6 +105,7 @@
   margin: 1rem 0;
 }
 
+/* Opciones de Compra */
 .purchase-options .option-group {
   margin-bottom: 1.5rem;
 }
@@ -124,6 +131,14 @@
   font-size: 1.5rem;
   cursor: pointer;
   border-radius: 4px;
+  transition: background-color .2s;
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  &:hover:not(:disabled) {
+    background-color: var(--color-dark-primary);
+  }
 }
 
 .quantity-selector input {
@@ -138,6 +153,7 @@
   font-size: 1.2rem;
   font-family: inherit;
   -moz-appearance: textfield;
+  appearance: none;
 }
 
 input::-webkit-outer-spin-button,
@@ -166,6 +182,32 @@ input::-webkit-inner-spin-button {
 .add-to-cart-btn:hover {
   transform: scale(1.02);
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.delivery-info {
+  background-color: var(--color-dark-secondary);
+  border-radius: var(--border-radius-base);
+  padding: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.delivery-info i {
+  color: var(--color-accent);
+  font-size: 1.5rem;
+}
+
+.delivery-info a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.delivery-info a:hover {
+  text-decoration: underline;
 }
 
 /* Sistema de Pestañas */
@@ -198,12 +240,14 @@ input::-webkit-inner-spin-button {
   padding-top: 2rem;
   display: none;
   line-height: 1.6;
+  color: var(--color-text-secondary);
 }
 
 .tab-content.active {
   display: block;
 }
 
+/* Contenido de las Pestañas */
 .spec-list {
   color: var(--color-text-secondary);
 }
@@ -214,9 +258,7 @@ input::-webkit-inner-spin-button {
   padding: 0.75rem 0;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 
-  &:first-child {
-    padding-top: 0;
-  }
+  &:first-child { padding-top: 0; }
 }
 
 .spec-item span:first-child {
@@ -224,6 +266,75 @@ input::-webkit-inner-spin-button {
   color: var(--color-text-primary);
 }
 
+.reviews-tab-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+.reviews-overview {
+  background-color: var(--color-dark-secondary);
+  padding: 1.5rem;
+  border-radius: var(--border-radius-base);
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.reviews-overview h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.reviews-overview .stars {
+  color: var(--color-trustpilot-green);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.reviews-overview hr {
+  border-color: rgba(255,255,255,0.1);
+  margin: 1rem 0;
+}
+.rating-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+.rating-bar .bar-container {
+  flex-grow: 1;
+  height: 8px;
+  background-color: var(--color-dark-primary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.rating-bar .bar {
+  height: 100%;
+  background-color: var(--color-trustpilot-green);
+  border-radius: 4px;
+}
+.review-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 1rem;
+}
+.review-list-header h3 {
+  font-size: 1.25rem;
+}
+.write-review-btn {
+  background-color: transparent;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color .3s, color .3s;
+}
+.write-review-btn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-dark-primary);
+}
 .review-item {
   border-bottom: 1px solid rgba(255,255,255,0.1);
   padding-bottom: 1.5rem;
@@ -257,7 +368,66 @@ input::-webkit-inner-spin-button {
   line-height: 1.7;
 }
 
+/* Productos Relacionados */
+.related-products {
+    grid-column: 1 / -1;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.related-products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.related-products-header h2 {
+    font-size: 1.5rem;
+}
+.carousel-nav {
+    display: none;
+}
+.carousel-btn {
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-dark-secondary);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--color-text-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color .3s;
+}
+.carousel-btn:hover {
+    background-color: var(--color-accent);
+    color: var(--color-dark-primary);
+}
+.related-grid-wrapper {
+    position: relative;
+}
+.related-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 85%;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar { display: none; }
+}
+.related-grid > * { scroll-snap-align: start; }
+
 /* Media Queries */
+@media (min-width: 768px) {
+    .reviews-tab-content {
+        grid-template-columns: 300px 1fr;
+        gap: 3rem;
+    }
+    .carousel-nav { display: flex; gap: 0.5rem; }
+    .related-grid { grid-auto-columns: 45%; }
+}
 @media (min-width: 992px) {
   .product-page {
     grid-template-columns: 1fr 1fr;
@@ -266,4 +436,5 @@ input::-webkit-inner-spin-button {
   .product-info h1 {
     font-size: 2.5rem;
   }
+  .related-grid { grid-auto-columns: 30%; }
 }

@@ -9,6 +9,7 @@ import { OfferBanner } from '../../../shared/components/offer-banner/offer-banne
 import { ReviewsSection } from '../../../shared/components/reviews-section/reviews-section';
 import { TrustSection } from '../../../shared/components/trust-section/trust-section';
 import { Observable } from 'rxjs';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -22,10 +23,21 @@ import { Observable } from 'rxjs';
     TrustSection
   ],
   templateUrl: './home.html',
-  styleUrls: ['./home.scss']
+  styleUrls: ['./home.scss'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'translateY(20px)' }),
+          stagger('100ms', [
+            animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ])
+  ]
 })
 export class Home implements OnInit {
-  // Ahora expondremos el observable directamente
   public products$: Observable<Product[]>;
 
   constructor(
@@ -40,7 +52,7 @@ export class Home implements OnInit {
     this.titleService.setTitle('BaratongoVzla - La Tecnología que Quieres');
     this.metaService.updateTag({
       name: 'description',
-      content: 'La mejor tienda de electrónica y accesorios gamer en Valencia, Venezuela. Encuentra proyectores, smartwatch y más con los mejores precios y calidad.'
+      content: 'La mejor tienda de electrónica y accesorios gamer en Valencia, Venezuela.'
     });
   }
 }
