@@ -1,19 +1,15 @@
 <div class="catalog-container">
   <h1 class="page-title">Nuestro Catálogo</h1>
 
-<div class="catalog-container">
-  <div *ngIf="!isLoading; else loadingBlock">
-    <div class="products-grid">
-      </div>
-    <div *ngIf="filteredProducts.length === 0" class="no-results">
-      <p>No se encontraron productos en esta categoría.</p>
-    </div>
+  <div class="search-bar-container">
+    <i class="bi bi-search"></i>
+    <input
+      type="search"
+      class="search-input"
+      placeholder="Buscar por nombre..."
+      #searchInput
+      (input)="onSearch(searchInput.value)">
   </div>
-
-  <ng-template #loadingBlock>
-    <app-loading-spinner></app-loading-spinner>
-  </ng-template>
-</div>
 
   <div class="filters-container">
     <button
@@ -30,12 +26,10 @@
   </div>
 
   <div class="products-grid">
-    <app-product-card *ngFor="let product of filteredProducts"
-      [product]="product">
-    </app-product-card>
+    <app-product-card *ngFor="let product of filteredProducts" [product]="product"></app-product-card>
   </div>
 
   <div *ngIf="filteredProducts.length === 0" class="no-results">
-    <p>No se encontraron productos en esta categoría.</p>
+    <p>No se encontraron productos que coincidan con tu búsqueda.</p>
   </div>
 </div>

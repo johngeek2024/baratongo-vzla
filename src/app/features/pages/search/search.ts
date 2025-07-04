@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../../../core/models/product.model';
 import { ProductService } from '../../../core/services/product';
 import { ProductCard } from '../../../shared/components/product-card/product-card';
-import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner'; // Importar
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, ProductCard, LoadingSpinner],
+  imports: [CommonModule, ProductCard],
   templateUrl: './search.html',
   styleUrls: ['./search.scss']
 })
@@ -20,18 +19,14 @@ export class Search implements OnInit {
   activeCategory: string = 'Todos';
   searchTerm: string = '';
 
-  isLoading: boolean = true; // Añadir
-
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.productService.products$.subscribe(products => {
       this.allProducts = products;
       this.applyFilters();
-      this.isLoading = false; // Desactivar al recibir datos
     });
 
-    // Llama al método que ahora sí existe
     this.categories = this.productService.getCategories();
   }
 

@@ -1,14 +1,28 @@
 <div *ngIf="product">
-  <a [routerLink]="['/producto', product.id]" class="card-link">
-    <article class="product-card">
-      <div class="product-image-container">
+  <article class="product-card">
+    <div class="product-card__image-wrapper">
+      <a [routerLink]="['/producto', product.id]">
         <span *ngIf="product.isBestseller" class="bestseller-badge">Más Vendido</span>
-        <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+        <img [src]="product.imageUrl" [alt]="product.name" class="product-card__image">
+        <div class="product-card__specs-overlay">
+          <ul class="specs-list">
+            <li><i class="fas fa-microchip spec-icon"></i><span>Procesador Gen 2</span></li>
+            <li><i class="fas fa-tint spec-icon"></i><span>Resistente al agua</span></li>
+            <li><i class="fas fa-heart-pulse spec-icon"></i><span>Sensor cardíaco</span></li>
+          </ul>
+        </div>
+      </a>
+    </div>
+    <div class="product-card__info">
+      <span class="product-card__category">{{ product.category }}</span>
+      <h3 class="product-card__name">{{ product.name }}</h3>
+      <div class="product-card__price">
+        <span class="product-card__price--current">{{ product.price | currency:'USD' }}</span>
+        <span *ngIf="product.originalPrice" class="product-card__price--original">
+          {{ product.originalPrice | currency:'USD' }}
+        </span>
       </div>
-      <div class="product-info">
-        <h3 class="product-name">{{ product.name }}</h3>
-        <p class="product-price">{{ product.price | currency:'USD' }}</p>
-      </div>
-    </article>
-  </a>
+    </div>
+    <button class="product-card__cta" (click)="addToCart($event)">Añadir al Carrito</button>
+  </article>
 </div>

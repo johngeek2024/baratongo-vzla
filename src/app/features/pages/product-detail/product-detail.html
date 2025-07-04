@@ -1,19 +1,72 @@
-<div *ngIf="product" class="product-detail-container">
-  <div class="product-image-section">
-    <img [src]="product.imageUrl" [alt]="product.name">
-  </div>
-  <div class="product-info-section">
-    <span class="product-category">{{ product.category }}</span>
-    <h1 class="product-title">{{ product.name }}</h1>
-    <p class="product-description">{{ product.description }}</p>
-    <div class="product-price-container">
-      <span class="product-price">{{ product.price | currency:'USD' }}</span>
-    </div>
-    <button class="add-to-cart-btn" (click)="onAddToCart()">Añadir al Carrito</button>
-  </div>
-</div>
+<div class="main-container" *ngIf="product$ | async as product">
+    <article class="product-page">
 
-<div *ngIf="!product" class="not-found-container">
-  <h2>Producto no encontrado</h2>
-  <p>Lo sentimos, no pudimos encontrar el producto que estás buscando.</p>
+        <section class="product-gallery">
+            <div class="main-image">
+                <img [src]="activeImageUrl" [alt]="product.name">
+            </div>
+            <div class="thumbnails" *ngIf="product.gallery && product.gallery.length > 1">
+                <div class="thumbnail-item" *ngFor="let img of product.gallery" (click)="selectImage(img)" [class.active]="img === activeImageUrl">
+                    <img [src]="img" alt="Thumbnail de {{ product.name }}">
+                </div>
+            </div>
+        </section>
+
+        <section class="product-info">
+            <div class="category">{{ product.category }}</div>
+            <h1>{{ product.name }}</h1>
+            <div class="product-rating" *ngIf="product.reviews">
+                <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                <span>({{ product.reviews.length || 0 }} reseñas)</span>
+            </div>
+            <div class="stock-status in-stock" *ngIf="product.stockStatus === 'in-stock'">
+                <i class="fas fa-check-circle"></i> En Stock
+            </div>
+            <div class="price">{{ product.price | currency:'USD' }}</div>
+
+            <div class="purchase-options">
+                <div class="option-group">
+                    <label>Cantidad</label>
+                    <div class="quantity-selector">
+                        <button (click)="changeQuantity(-1)">-</button>
+                        <input type="number" [value]="quantity" min="1" readonly>
+                        <button (click)="changeQuantity(1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="add-to-cart-btn" (click)="onAddToCart()">
+                <i class="fas fa-shopping-cart"></i> Agregar al Carrito
+            </button>
+        </section>
+
+        <section class="product-details-tabs">
+            <div class="tab-headers">
+                <div class="tab-header" [class.active]="activeTab === 'description'" (click)="changeTab('description')">Descripción</div>
+                <div class="tab-header" [class.active]="activeTab === 'specs'" (click)="changeTab('specs')" *ngIf="product.specs && product.specs.length > 0">Especificaciones</div>
+                <div class="tab-header" [class.active]="activeTab === 'reviews'" (click)="changeTab('reviews')" *ngIf="product.reviews && product.reviews.length > 0">Valoraciones ({{ product.reviews.length }})</div>
+            </div>
+
+            <div class="tab-content" [class.active]="activeTab === 'description'">
+                <p>{{ product.description }}</p>
+            </div>
+            <div class="tab-content" [class.active]="activeTab === 'specs'">
+                <div class="spec-list">
+                    <div class="spec-item" *ngFor="let spec of product.specs">
+                        <span>{{ spec.key }}</span>
+                        <span>{{ spec.value }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" [class.active]="activeTab === 'reviews'">
+                <div class="review-item" *ngFor="let review of product.reviews">
+                    <div class="review-author">
+                        <span class="author-name">{{ review.author }}</span>
+                        <span class="verified-purchase" *ngIf="review.isVerifiedPurchase"><i class="fas fa-check-circle"></i> Compra Verificada</span>
+                    </div>
+                    <p class="review-text">"{{ review.text }}"</p>
+                </div>
+            </div>
+        </section>
+    </article>
 </div>
