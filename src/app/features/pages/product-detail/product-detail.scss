@@ -281,11 +281,15 @@ input::-webkit-inner-spin-button {
 .reviews-overview h3 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
 }
 .reviews-overview .stars {
   color: var(--color-trustpilot-green);
   font-size: 1.2rem;
   margin-bottom: 1rem;
+}
+.reviews-overview p {
+  color: var(--color-text-secondary);
 }
 .reviews-overview hr {
   border-color: rgba(255,255,255,0.1);
@@ -297,6 +301,7 @@ input::-webkit-inner-spin-button {
   gap: 1rem;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
+  color: var(--color-text-secondary);
 }
 .rating-bar .bar-container {
   flex-grow: 1;
@@ -320,6 +325,7 @@ input::-webkit-inner-spin-button {
 }
 .review-list-header h3 {
   font-size: 1.25rem;
+  color: var(--color-text-primary);
 }
 .write-review-btn {
   background-color: transparent;
@@ -352,6 +358,7 @@ input::-webkit-inner-spin-button {
 }
 .review-author .author-name {
   font-weight: 700;
+  color: var(--color-text-primary);
 }
 .review-author .verified-purchase {
   font-size: 0.8rem;
@@ -366,6 +373,7 @@ input::-webkit-inner-spin-button {
 }
 .review-item .review-text {
   line-height: 1.7;
+  color: var(--color-text-secondary);
 }
 
 /* Productos Relacionados */

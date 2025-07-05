@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
@@ -7,10 +7,9 @@ import { Product } from '../../../core/models/product.model';
 import { CartService } from '../../../core/services/cart';
 import { SeoService } from '../../../core/services/seo';
 import { NotificationService } from '../../../core/services/notification';
-import { Observable, Subscription, map, take } from 'rxjs';
+import { Observable, Subscription, map, switchMap, take } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ProductCard } from '../../../shared/components/product-card/product-card';
-
 
 @Component({
   selector: 'app-product-detail',
@@ -20,9 +19,8 @@ import { ProductCard } from '../../../shared/components/product-card/product-car
   styleUrls: ['./product-detail.scss']
 })
 export class ProductDetail implements OnInit, OnDestroy {
-  product$!: Observable<Product | undefined>;
+  product: Product | null = null;
   relatedProducts$!: Observable<Product[]>;
-  private product: Product | null = null;
   private routeSub!: Subscription;
 
   @ViewChild('relatedGrid') relatedGrid!: ElementRef<HTMLDivElement>;
@@ -38,34 +36,26 @@ export class ProductDetail implements OnInit, OnDestroy {
     private titleService: Title,
     private metaService: Meta,
     private seoService: SeoService,
-    private notificationService: NotificationService,
-    private cd: ChangeDetectorRef
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.loadProduct(id);
-        window.scrollTo(0, 0);
+    this.routeSub = this.route.params.pipe(
+      switchMap(params => {
+        const id = params['id'];
+        window.scrollTo(0, 0); // Sube al inicio de la página al cambiar de producto
+        return this.productService.getProductById(id);
+      })
+    ).subscribe(productData => {
+      if (productData) {
+        this.product = productData;
+        this.activeImageUrl = productData.gallery && productData.gallery.length > 0
+          ? productData.gallery[0]
+          : productData.imageUrl;
+        this.setupSeo(productData);
+        this.loadRelatedProducts(productData.id, productData.category);
       }
     });
-  }
-
-  loadProduct(id: string): void {
-    this.product$ = this.productService.getProductById(id).pipe(
-      tap(productData => {
-        if (productData) {
-          this.product = productData;
-          this.activeImageUrl = productData.gallery && productData.gallery.length > 0
-            ? productData.gallery[0]
-            : productData.imageUrl;
-          this.setupSeo(productData);
-          this.loadRelatedProducts(id, productData.category);
-          this.cd.detectChanges();
-        }
-      })
-    );
   }
 
   loadRelatedProducts(currentProductId: string, category: string): void {

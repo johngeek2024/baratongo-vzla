@@ -1,4 +1,4 @@
-<div class="main-container" *ngIf="product$ | async as product">
+<div class="main-container" *ngIf="product">
     <article class="product-page">
 
         <section class="product-gallery">
@@ -58,7 +58,7 @@
             <div class="tab-content" [class.active]="activeTab === 'description'">
                 <p>{{ product.description }}</p>
             </div>
-            <div class="tab-content" [class.active]="activeTab === 'specs'">
+            <div class="tab-content" [class.active]="activeTab === 'specs'" *ngIf="product.specs">
                 <div class="spec-list">
                     <div class="spec-item" *ngFor="let spec of product.specs">
                         <span>{{ spec.key }}</span>
@@ -66,8 +66,8 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-content" [class.active]="activeTab === 'reviews'">
-                <div class="reviews-tab-content" *ngIf="product.reviews">
+            <div class="tab-content" [class.active]="activeTab === 'reviews'" *ngIf="product.reviews">
+                <div class="reviews-tab-content">
                     <aside class="reviews-overview">
                         <h3>4.8 de 5</h3>
                         <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
@@ -82,6 +82,21 @@
                             <span>4<i class="fas fa-star"></i></span>
                             <div class="bar-container"><div class="bar" style="width: 20%;"></div></div>
                             <span>{{ getReviewsCountByRating(4) }}</span>
+                        </div>
+                         <div class="rating-bar">
+                            <span>3<i class="fas fa-star"></i></span>
+                            <div class="bar-container"><div class="bar" style="width: 0%;"></div></div>
+                            <span>{{ getReviewsCountByRating(3) }}</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>2<i class="fas fa-star"></i></span>
+                            <div class="bar-container"><div class="bar" style="width: 0%;"></div></div>
+                            <span>{{ getReviewsCountByRating(2) }}</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>1<i class="fas fa-star"></i></span>
+                            <div class="bar-container"><div class="bar" style="width: 0%;"></div></div>
+                            <span>{{ getReviewsCountByRating(1) }}</span>
                         </div>
                     </aside>
                     <main class="review-list">
