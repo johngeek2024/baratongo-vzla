@@ -12,12 +12,12 @@ import { provideToastr } from 'ngx-toastr';
 
 // Tu configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyANN-Y59qKZNCc-M0J7icKmP6gkYnNEzjU",
-  authDomain: "baratongo-vzla-tienda.firebaseapp.com",
-  projectId: "baratongo-vzla-tienda",
-  storageBucket: "baratongo-vzla-tienda.firebasestorage.app",
-  messagingSenderId: "62611906509",
-  appId: "1:62611906509:web:1563b6bada81a5bdbcae84"
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
 };
 
 export const appConfig: ApplicationConfig = {
